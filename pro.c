@@ -1,15 +1,16 @@
 #include<stdio.h>
 #include<math.h>
 #define e 0.001
-#define max_terms 10
+#define maxtermno 10
 
+static int itr=0;
 static int k;
 
 struct term{
     float a;
     float p;
 };
-static struct term f[max_terms];
+static struct term f[maxtermno];
 
 double func(double x){
     double y=0;
@@ -21,7 +22,7 @@ double func(double x){
 
 double func_display(){
     for(int i=0;i<k;i++){
-        printf("+(%f(x)^%f)",f[i].a,f[i].p);
+        printf("+(%.3f(x)^%.2f)",f[i].a,f[i].p);
     }
     printf("=0\n");
 }
@@ -35,7 +36,9 @@ int bisection(double a, double b){
     }
     double c=a;
     while((b-a)>=e){
+        itr++;
         c=(a+b)/2.0;
+        printf("After %2d iteration c=%f\n",itr,(a+b)/2);
         if(func(c)==0){
             break;
         }
@@ -46,7 +49,7 @@ int bisection(double a, double b){
             a=c;
         }
     }
-    printf("The value of the root is %lf",c);
+    printf("The value of the root after %d iterations is %lf",itr,c);
     return 1;
 }
 
